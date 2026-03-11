@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Result</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container mt-5">
+
+<h2>DNA Strands</h2>
+
+<div class="alert alert-secondary">
+5' → 3' : {{sequence}}
+</div>
+
+<div class="alert alert-info">
+3' → 5' : {{reverse_seq}}
+</div>
+
+
+<h2>Six Reading Frames</h2>
+
+<table class="table table-bordered">
+
+<tr>
+<th>Frame</th>
+<th>Codons</th>
+</tr>
+
+{% for frame,codons in frames.items() %}
+
+<tr>
+
+<td>{{frame}}</td>
+
+<td>{{codons|join(" ")}}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+
+<h2>All ORFs</h2>
+
+<table class="table table-bordered">
+
+<tr>
+<th>Strand</th>
+<th>Frame</th>
+<th>Start</th>
+<th>End</th>
+<th>Length</th>
+<th>Sequence</th>
+</tr>
+
+{% for o in orfs %}
+
+<tr>
+<td>{{o.strand}}</td>
+<td>{{o.frame}}</td>
+<td>{{o.start}}</td>
+<td>{{o.end}}</td>
+<td>{{o.length}}</td>
+<td>{{o.sequence}}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+
+<h2>Potential Coding ORF</h2>
+
+{% if best_orf %}
+
+<div class="alert alert-success">
+
+Strand : {{best_orf.strand}} <br>
+
+Frame : {{best_orf.frame}} <br>
+
+Start : {{best_orf.start}} <br>
+
+End : {{best_orf.end}} <br>
+
+Length : {{best_orf.length}} <br>
+
+Sequence : {{best_orf.sequence}}
+
+</div>
+
+{% endif %}
+
+
+<h2>Promoter Motifs</h2>
+
+<table class="table table-bordered">
+
+<tr>
+<th>Type</th>
+<th>Position</th>
+<th>Sequence</th>
+</tr>
+
+{% for p in promoters %}
+
+<tr>
+<td>{{p.type}}</td>
+<td>{{p.position}}</td>
+<td>{{p.sequence}}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+
+<h2>Shine Dalgarno</h2>
+
+<table class="table table-bordered">
+
+<tr>
+<th>Position</th>
+<th>Sequence</th>
+</tr>
+
+{% for s in sd %}
+
+<tr>
+<td>{{s.position}}</td>
+<td>{{s.sequence}}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+
+<h2>Rho Independent Terminator</h2>
+
+<table class="table table-bordered">
+
+<tr>
+<th>Position</th>
+<th>Sequence</th>
+</tr>
+
+{% for t in terminators %}
+
+<tr>
+<td>{{t.position}}</td>
+<td>{{t.sequence}}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+
+<a href="/" class="btn btn-secondary mt-3">
+Back
+</a>
+
+</div>
+
+</body>
+</html>

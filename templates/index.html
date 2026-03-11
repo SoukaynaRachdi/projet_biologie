@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analyse ADN</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        textarea { width: 100%; height: 150px; }
+        table, th, td { border: 1px solid black; border-collapse: collapse; padding: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Analyse ADN</h1>
+    <form method="POST">
+        <textarea name="dna">{{ dna }}</textarea><br>
+        <button type="submit">Analyser</button>
+    </form>
+
+    {% if orfs %}
+        <h2>ORFs codant des protéines</h2>
+        <table>
+            <tr><th>Strand</th><th>Frame</th><th>Start</th><th>Stop</th><th>Length</th><th>Protein</th></tr>
+            {% for o in orfs %}
+                <tr>
+                    <td>{{ o.strand }}</td>
+                    <td>{{ o.frame }}</td>
+                    <td>{{ o.start }}</td>
+                    <td>{{ o.stop }}</td>
+                    <td>{{ o.length }}</td>
+                    <td>{{ o.protein }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h2>Promoteurs (-35 et -10)</h2>
+        {% for p in promoters %}
+            <p>Box-35: {{ p.box35 }} | Box-10: {{ p.box10 }}</p>
+        {% endfor %}
+
+        <h2>Terminateurs Rho-indépendants</h2>
+        {% for t in terminators %}
+            <p>{{ t.sequence }} (start: {{ t.start }})</p>
+        {% endfor %}
+
+        <h2>Sites Shine-Dalgarno</h2>
+        {% for s in sd_sites %}
+            <p>{{ s.sequence }} (position: {{ s.position }} avant ATG à {{ s.atg_position }})</p>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>
